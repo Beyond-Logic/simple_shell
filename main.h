@@ -15,5 +15,8 @@
 void mainPrompt(void);
 int executeCommand(char *command);
 void handleInputError(const char *command);
+int isInteractiveMode(void);
+void processInteractiveInput(void);
+void processNonInteractiveInput(void);
 
 #endif /* MAIN_H */
