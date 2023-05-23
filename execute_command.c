@@ -14,7 +14,8 @@ int executeCommand(char *command)
 	if (pid == -1)
 	{
 		char errorMessage[MAX_ERROR_LENGTH];
-		int length = snprintf(errorMessage, MAX_ERROR_LENGTH, "%s: Fork failed\n", command);
+		int length = snprintf(errorMessage, MAX_ERROR_LENGTH,
+				"%s: Fork failed\n", command);
 
 		write(STDERR_FILENO, errorMessage, length);
 
@@ -28,7 +29,8 @@ int executeCommand(char *command)
 
 		char errorMessage[MAX_ERROR_LENGTH];
 
-		int length = snprintf(errorMessage, MAX_ERROR_LENGTH, "%s: Command execution failed\n", command);
+		int length = snprintf(errorMessage, MAX_ERROR_LENGTH,
+				"%s: Command execution failed\n", command);
 
 		write(STDERR_FILENO, errorMessage, length);
 		_exit(EXIT_FAILURE);

@@ -24,7 +24,8 @@ int main(void)
 			{
 				char errorMessage[MAX_ERROR_LENGTH];
 
-				int length = sprintf(errorMessage, MAX_ERROR, LENGTH, "%s: Error reading input\n", command);
+				int length = sprintf(errorMessage, MAX_ERROR, LENGTH,
+						"%s: Error reading input\n", command);
 
 				write(STDERR_FILENO, errorMessage, length);
 				_exit(EXIT_FAILURE);
@@ -54,7 +55,8 @@ int main(void)
 		if (bytesRead == -1)
 		{
 			char errorMessage[MAX_ERROR_LENGTH];
-			int length = snprintf(errorMessage, MAX_ERROR_LENGTH, "%s: Error reading input\n", command);
+			int length = snprintf(errorMessage, MAX_ERROR_LENGTH,
+					"%s: Error reading input\n", command);
 
 			write(STDERR_FILENO, errorMessage, length);
 			_exit(EXIT_FAILURE);
