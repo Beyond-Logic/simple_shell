@@ -44,4 +44,4 @@ int executeCommand(char *command)
 	}
 
 	return (1);
-}
+}}
