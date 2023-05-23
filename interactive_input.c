@@ -13,9 +13,10 @@ void printPrompt(void)
 /**
   * isInteractiveMode - Is Interactive Mode
   *
+  * Return: Return
   */
 
-void isInteractiveMode(void)
+int isInteractiveMode(void)
 {
 	return (isatty(STDIN_FILENO));
 }
@@ -28,12 +29,14 @@ void isInteractiveMode(void)
 void processInteractiveInput(void)
 {
 	char command[MAX_COMMAND_LENGTH];
+	ssize_t bytesRead;
+	size_t commandLength;
 
 	while (1)
 	{
 		printPrompt();
 
-		ssize_t bytesRead = read(STDIN_FILENO, command, MAX_COMMAND_LENGTH);
+		bytesRead = read(STDIN_FILENO, command, MAX_COMMAND_LENGTH);
 
 		if (bytesRead == -1)
 		{
@@ -47,7 +50,7 @@ void processInteractiveInput(void)
 			break;
 		}
 
-		size_t commandLength = bytesRead - 1;
+		commandLength = bytesRead - 1;
 
 		command[commandLength] = '\0';
 

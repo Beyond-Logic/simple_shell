@@ -1,11 +1,11 @@
 #include <unistd.h>
 /**
- * main - Entry point
+ * write_to_stdout - Write
  *
  * Return: Always 0 (Success)
 */
 
-int main(void)
+int write_to_stdout(void)
 {
 	char message[] = "Hi, C Programming\n";
 

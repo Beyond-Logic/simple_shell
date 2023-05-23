@@ -1,5 +1,4 @@
 #include "main.h"
-
 /**
   * executeCommand - Execute Command
   * @command: command
@@ -9,30 +8,34 @@
 
 int executeCommand(char *command)
 {
-	pid_t pid = fork();
+	char *args[2];
+	char errorMessage[MAX_ERROR_LENGTH];
+	pid_t childPid;
+	int length;
 
-	if (pid == -1)
+	args[0] = command;
+	args[1] = NULL;
+
+	length = snprintf(errorMessage, MAX_ERROR_LENGTH,
+				"Error executing command: %s", command);
+
+	if (length < 0 || length >= MAX_ERROR_LENGTH)
 	{
-		char errorMessage[MAX_ERROR_LENGTH];
-		int length = snprintf(errorMessage, MAX_ERROR_LENGTH,
-				"%s: Fork failed\n", command);
-
-		write(STDERR_FILENO, errorMessage, length);
-
+		fprintf(stderr, "Failed to construct error message\n");
 		_exit(EXIT_FAILURE);
 	}
-	else if (pid == 0)
+
+	childPid = fork();
+
+	if (childPid < 0)
 	{
-		char *args[] = { command, NULL };
-
+		fprintf(stderr, "Failed to fork\n");
+		_exit(EXIT_FAILURE);
+	}
+	else if (childPid == 0)
+	{
 		execve(command, args, environ);
-
-		char errorMessage[MAX_ERROR_LENGTH];
-
-		int length = snprintf(errorMessage, MAX_ERROR_LENGTH,
-				"%s: Command execution failed\n", command);
-
-		write(STDERR_FILENO, errorMessage, length);
+		fprintf(stderr, "%s\n", errorMessage);
 		_exit(EXIT_FAILURE);
 	}
 	else
@@ -40,5 +43,5 @@ int executeCommand(char *command)
 		wait(NULL);
 	}
 
-	return (0);
+	return (1);
 }

@@ -5,7 +5,7 @@
   * @command: command
   */
 
-void handleInputError(char *command)
+void handleInputError(const char *command)
 {
 	char errorMessage[MAX_ERROR_LENGTH];
 	int length = snprintf(errorMessage, MAX_ERROR_LENGTH,
