@@ -14,5 +14,6 @@
 
 void mainPrompt(void);
 int executeCommand(char *command);
+void handleInputError(const char *command);
 
 #endif /* MAIN_H */

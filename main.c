@@ -22,13 +22,8 @@ int main(void)
 
 			if (bytesRead == -1)
 			{
-				char errorMessage[MAX_ERROR_LENGTH];
-
-				int length = sprintf(errorMessage, MAX_ERROR, LENGTH,
-						"%s: Error reading input\n", command);
-
-				write(STDERR_FILENO, errorMessage, length);
-				_exit(EXIT_FAILURE);
+				handleInputError(command);
+				break;
 			}
 			else if (bytesRead == 0)
 			{
@@ -54,12 +49,8 @@ int main(void)
 
 		if (bytesRead == -1)
 		{
-			char errorMessage[MAX_ERROR_LENGTH];
-			int length = snprintf(errorMessage, MAX_ERROR_LENGTH,
-					"%s: Error reading input\n", command);
-
-			write(STDERR_FILENO, errorMessage, length);
-			_exit(EXIT_FAILURE);
+			handleInputError(command);
+			return (EXIT_FAILURE);
 		}
 		else if (bytesRead > 0)
 		{
@@ -71,6 +62,6 @@ int main(void)
 		}
 	}
 
-	return (0);
+	return (EXIT_SUCCESS);
 
 }
