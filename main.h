@@ -2,26 +2,28 @@
 
 #define MAIN_H
 
-#include <unistd.h>
 #include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <dirent.h>
-#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <signal.h>
+#include <unistd.h>
 #include <sys/wait.h>
 
-#define MAX_COMMAND_LENGTH 100
-#define MAX_ERROR_LENGTH (MAX_COMMAND_LENGTH + 30)
+#define CMDLINE_MAX_LENGTH 1024
 
-void mainPrompt(void);
-void printPrompt(void);
-int executeCommand(char *command);
-void handleInputError(const char *command);
-int isInteractiveMode(void);
-void processInteractiveInput(void);
-void processNonInteractiveInput(void);
-extern char **environ;
+#define MAX_NUM_ARGS 1024
+
+char *read_line(void);
+
+char **split_line(char *line);
+
+int execute(char **args);
+
+int launch(char **args);
+
+void sigchld_handler(int sig);
+
+void sigint_handler(int sig);
 
 #endif /* MAIN_H */

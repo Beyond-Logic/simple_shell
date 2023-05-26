@@ -1,25 +1,29 @@
 #include "main.h"
 
 /**
-  * main - Main
-  *
+  * main - main
   * Return: Return
   */
 
 int main(void)
 {
-	int isInteractive = isInteractiveMode();
+	char *line;
+	char **args;
+	int status;
 
-	if (isInteractive)
-	{
-		processInteractiveInput();
-	}
+	signal(SIGCHLD, sigchld_handler);
+	signal(SIGINT, sigint_handler);
 
-	else
-	{
-		processNonInteractiveInput();
-	}
+	do {
+
+		printf("Simple Shell> ");
+		line = read_line();
+		args = split_line(line);
+		status = launch(args);
+
+		free(line);
+		free(args);
+	} while (status);
 
 	return (0);
-
 }
