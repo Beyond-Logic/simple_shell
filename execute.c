@@ -8,36 +8,25 @@
 
 int execute(char **args)
 {
-	pid_t pid;
-	int status;
-
 	if (args[0] == NULL)
 	{
 		return (1);
 	}
-
-	pid = fork();
-
-	if (pid == 0)
+	else if (strcmp(args[0], "cd") == 0)
 	{
-		if (execvp(args[0], args) == -1)
-		{
-			perror(args[0]);
-			exit(EXIT_FAILURE);
-		}
-
-		exit(EXIT_SUCCESS);
-
+		execute_cd(args);
 	}
-	else if (pid < 0)
+	else if (strcmp(args[0], "exit") == 0)
 	{
-		perror("execute");
+		execute_exit();
+	}
+	else if (strcmp(args[0], "env") == 0)
+	{
+		execute_env();
 	}
 	else
 	{
-		do {
-			waitpid(pid, &status, WUNTRACED);
-		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+		execute_command(args);
 	}
 
 	return (1);

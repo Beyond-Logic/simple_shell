@@ -28,4 +28,12 @@ void sigchld_handler(int sig);
 
 void sigint_handler(int sig);
 
+void execute_cd(char **args);
+
+void execute_exit(void);
+
+void execute_env(void);
+
+void execute_command(char **args);
+
 #endif /* MAIN_H */

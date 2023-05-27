@@ -8,62 +8,27 @@
 
 int launch(char **args)
 {
-	pid_t pid;
 
 	if (args[0] == NULL)
 	{
 		return (1);
 	}
-	if (strcmp(args[0], "cd") == 0)
+	else if (strcmp(args[0], "cd") == 0)
 	{
-		if (args[1] == NULL)
-		{
-			fprintf(stderr, "cd: missing argument\n");
-		}
-		else
-		{
-			if (chdir(args[1]) != 0)
-			{
-				perror(args[0]);
-			}
-		}
-		return (1);
+		execute_cd(args);
 	}
-
 	else if (strcmp(args[0], "exit") == 0)
 	{
-		exit(0);
+		execute_exit();
 	}
-
 	else if (strcmp(args[0], "env") == 0)
 	{
-		char **env = environ;
-
-		while (*env)
-		{
-			printf("%s\n", *env);
-			env++;
-		}
-	}
-	pid = fork();
-
-	if (pid == -1)
-	{
-		perror("fork");
-		return (1);
-	}
-	else if (pid == 0)
-	{
-		execvp(args[0], args);
-
-		perror(args[0]);
-		exit(EXIT_FAILURE);
+		execute_env();
 	}
 	else
 	{
-		int status;
-
-		waitpid(pid, &status, 0);
+		execute_command(args);
 	}
+
 	return (1);
 }
