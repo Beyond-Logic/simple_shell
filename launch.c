@@ -8,11 +8,12 @@
 
 int launch(char **args)
 {
+	pid_t pid;
+
 	if (args[0] == NULL)
 	{
 		return (1);
 	}
-
 	if (strcmp(args[0], "cd") == 0)
 	{
 		if (args[1] == NULL)
@@ -26,7 +27,6 @@ int launch(char **args)
 				perror(args[0]);
 			}
 		}
-
 		return (1);
 	}
 
@@ -34,6 +34,25 @@ int launch(char **args)
 	{
 		exit(0);
 	}
+	pid = fork();
 
-	return (execute(args));
+	if (pid == -1)
+	{
+		perror("fork");
+		return (1);
+	}
+	else if (pid == 0)
+	{
+		execvp(args[0], args);
+
+		perror(args[0]);
+		exit(EXIT_FAILURE);
+	}
+	else
+	{
+		int status;
+
+		waitpid(pid, &status, 0);
+	}
+	return (1);
 }
