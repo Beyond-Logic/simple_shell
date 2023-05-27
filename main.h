@@ -14,6 +14,8 @@
 
 #define MAX_NUM_ARGS 1024
 
+extern char **environ;
+
 char *read_line(void);
 
 char **split_line(char *line);

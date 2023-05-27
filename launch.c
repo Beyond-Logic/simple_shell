@@ -34,6 +34,17 @@ int launch(char **args)
 	{
 		exit(0);
 	}
+
+	else if (strcmp(args[0], "env") == 0)
+	{
+		char **env = environ;
+
+		while (*env)
+		{
+			printf("%s\n", *env);
+			env++;
+		}
+	}
 	pid = fork();
 
 	if (pid == -1)
